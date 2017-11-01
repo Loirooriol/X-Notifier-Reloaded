@@ -2,8 +2,12 @@
 Notifies your webmails, improvement and fix for X-notifier 3.5.23 because original author has been abandoned this version. 
 
 ## Requirement
-- Firefox 13 - 56
-- Firefox Nightly 57 with `extensions.legacy.enabled = true` and `extensions.allow-non-mpc-extensions = true`.
+- Firefox 25 - 56
+- Firefox Nightly 57-58 with the following preferences:
+  ```
+  extensions.legacy.enabled = true
+  extensions.allow-non-mpc-extensions = true
+  ```
 
 ## Release History
 - 3.5.25 - August 14 2017: 
