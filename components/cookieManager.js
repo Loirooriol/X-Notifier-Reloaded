@@ -93,8 +93,6 @@ CookieManager.prototype={
     return str;
   },
   setCookieToBrowser: function(){
-    var cm = Components.classes["@mozilla.org/cookiemanager;1"]
-              .getService(Ci.nsICookieManager2);
     for(var o of this.cookies){
 //if(!o.expires)dout(o.name+" "+o.getExpiry());
       try{
