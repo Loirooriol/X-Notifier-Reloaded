@@ -452,9 +452,7 @@ Handler.prototype.getHtml = function(aURL,aPostData,aHeaders,aMethod) {
   channel.asyncOpen(this,httpChannel);
 }
 Handler.prototype.getCookie = function(domain,name){
-  var obj = Components.classes["@mozilla.org/cookiemanager;1"].
-              getService(Ci.nsICookieManager2);
-  var enm = obj.enumerator;
+  var enm = cm.enumerator;
   while(enm.hasMoreElements()){
     var ck = enm.getNext();
     ck.QueryInterface(Ci.nsICookie2);

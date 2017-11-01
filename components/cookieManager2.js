@@ -44,8 +44,6 @@ CookieManager.prototype={
     return false;
   },*/
   _insert: function(val){
-    var cm = Components.classes["@mozilla.org/cookiemanager;1"]
-              .getService(Ci.nsICookieManager2);
     try{
       if (cm.cookieExists){
 //dout(val);
@@ -57,8 +55,6 @@ CookieManager.prototype={
     }catch(e){}
   },
   findCookie:function(domain,name){
-    var cm = Components.classes["@mozilla.org/cookiemanager;1"].
-                getService(Components.interfaces.nsICookieManager2);
     var enm = cm.enumerator;
     while(enm.hasMoreElements()){
       var ck = enm.getNext();
@@ -80,8 +76,6 @@ CookieManager.prototype={
     return s;
   },
   findCookieString:function(domain,name){
-    var cm = Components.classes["@mozilla.org/cookiemanager;1"].
-                getService(Components.interfaces.nsICookieManager2);
     var enm = cm.enumerator;
     while(enm.hasMoreElements()){
       var ck = enm.getNext();
@@ -103,8 +97,6 @@ CookieManager.prototype={
     /*var cs = Components.classes["@mozilla.org/cookieService;1"]
                   .getService(Components.interfaces.nsICookieService);
     return cs.getCookieStringFromHttp(aURI,null,null);*/
-    var cm = Components.classes["@mozilla.org/cookiemanager;1"].
-                getService(Components.interfaces.nsICookieManager2);
     var enm = cm.enumerator;
     var str="";
     while(enm.hasMoreElements()){
@@ -131,8 +123,6 @@ CookieManager.prototype={
     this.copyTo();
   },
   copyTo:function(dst){
-    var cm = Components.classes["@mozilla.org/cookiemanager;1"].
-                getService(Components.interfaces.nsICookieManager2);
     var enm = cm.enumerator;
     if(dst)dst.clear();
     while(enm.hasMoreElements()){
@@ -153,17 +143,15 @@ CookieManager.prototype={
     }
   },
   clear: function(){
-    var obj = Components.classes["@mozilla.org/cookiemanager;1"].
-                getService(Components.interfaces.nsICookieManager2);
-    var enm = obj.enumerator;
+    var enm = cm.enumerator;
     while(enm.hasMoreElements()){
       var ck = enm.getNext();
       if (ck && ck instanceof Components.interfaces.nsICookie2){
         if(endsWith(ck.host,this.ext)){
           try{
-            obj.remove(ck.host,ck.name,ck.path,false,{});
+            cm.remove(ck.host,ck.name,ck.path,false,{});
           }catch(e){
-            obj.remove(ck.host,ck.name,ck.path,false);
+            cm.remove(ck.host,ck.name,ck.path,false);
           }
         }
       }
