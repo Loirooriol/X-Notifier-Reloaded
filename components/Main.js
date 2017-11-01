@@ -55,6 +55,10 @@ const formSubmitURL = "user";
 
 const dout=Components.utils.reportError;
 
+// Bug 1407720 merged nsICookieManager2 into nsICookieManager
+const cm = Components.classes["@mozilla.org/cookiemanager;1"]
+.getService('nsICookieManager2' in Ci ? Ci.nsICookieManager2 : Ci.nsICookieManager);
+
 var enableDebug=0;
 /***********************************************************
 class definition
