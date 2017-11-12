@@ -110,7 +110,7 @@ function Main() {
       if(o=="mailSound")o2="alertSound";
       switch(type){
       case Ci.nsIPrefBranch.PREF_STRING:
-        this.prefBranch.setComplexValue(o2,Ci.nsISupportsString,pb.getComplexValue(o,Ci.nsISupportsString));
+        setStringPref(this.prefBranch, o2, getStringPref(pb, o));
         break;
       case Ci.nsIPrefBranch.PREF_INT:
         this.prefBranch.setIntPref(o2,pb.getIntPref(o));
@@ -536,7 +536,7 @@ Main.prototype.buildTable = function(onInit) {
         var o2=o;
         switch(type){
         case Ci.nsIPrefBranch.PREF_STRING:
-          pb2.setComplexValue(o2,Ci.nsISupportsString,pb.getComplexValue(o,Ci.nsISupportsString));
+          setStringPref(pb2, o2, getStringPref(pb, o));
           break;
         case Ci.nsIPrefBranch.PREF_INT:
           pb2.setIntPref(o2,pb.getIntPref(o));
@@ -610,7 +610,7 @@ Main.prototype.buildTable = function(onInit) {
       if(obj.needLocale)obj.needServer=true;
       if(obj.needServer)obj.server=obj.user.split("|")[1];
       try{
-        obj.link=pb.getComplexValue("link",Ci.nsISupportsString).data;
+        obj.link = getStringPref(pb, "link");
       }catch(e){}
       if(obj.init)obj.init();
       obj.setLoginData();
@@ -619,19 +619,19 @@ Main.prototype.buildTable = function(onInit) {
         obj.interval=pb.getIntPref("interval");
       }catch(e){}
       try{
-        obj.alias=pb.getComplexValue("alias",Ci.nsISupportsString).data;
+        obj.alias = getStringPref(pb, "alias");
       }catch(e){}
       try{
         obj.autoOpen=pb.getBoolPref("autoOpen");
       }catch(e){}
       try{
-        obj.icon=pb.getComplexValue("icon",Ci.nsISupportsString).data;
+        obj.icon = getStringPref(pb, "icon");
       }catch(e){}
       try{
-        obj.sound=pb.getComplexValue("sound",Ci.nsISupportsString).data;
+        obj.sound = getStringPref(pb, "sound");
       }catch(e){}
       try{
-        obj.keyword=pb.getComplexValue("keyword",Ci.nsISupportsString).data;
+        obj.keyword = getStringPref(pb, "keyword");
       }catch(e){}
       if(!this.prefBranch.getBoolPref("saveCookies"))delete obj.checkLogin;
       obj.inited=true;
@@ -1924,4 +1924,17 @@ Main.prototype.toggleDebug=function(){
   for(i=0;i<this.handlers.length;++i){
     this.handlers[i].debug=this.debug;
   }
+}
+
+function getStringPref(prefBranch, prefStr) {
+  if (prefBranch.getStringPref) {
+    return prefBranch.getStringPref(prefStr);
+  }
+  return prefBranch.getComplexValue(prefStr, Components.interfaces.nsISupportsString).data;
+}
+function setStringPref(prefBranch, prefStr, str) {
+  if (prefBranch.setStringPref) {
+    return prefBranch.setStringPref(prefStr, str);
+  }
+  return prefBranch.setComplexValue(prefStr, Components.interfaces.nsISupportsString, str);
 }
