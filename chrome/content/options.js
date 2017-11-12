@@ -207,18 +207,30 @@ function _setInt(host,user,name,val,defVal){
     }
   }
 }
+function getStringPref(prefStr) {
+  if (prefBranch.getStringPref) {
+    return prefBranch.getStringPref(prefStr);
+  }
+  return prefBranch.getComplexValue(prefStr, Components.interfaces.nsISupportsString).data;
+}
+function setStringPref(prefStr, str) {
+  if (prefBranch.setStringPref) {
+    return prefBranch.setStringPref(prefStr, str);
+  }
+  return prefBranch.setComplexValue(prefStr,Components.interfaces.nsISupportsString, str);
+}
 function _setUniChar(host,user,name,val){
   var prefStr=PREF_BRANCH+"["+host+"#"+user+"]."+name;
   var t=null;
   try{
-    t=prefBranch.getComplexValue(prefStr,Components.interfaces.nsISupportsString).data;
+    t = getStringPref(prefStr);
   }catch(e){}
   if(t!=val){
     if(val){
       var str = Components.classes["@mozilla.org/supports-string;1"]
             .createInstance(Components.interfaces.nsISupportsString);
       str.data = val;
-      prefBranch.setComplexValue(prefStr,Components.interfaces.nsISupportsString, str);
+      setStringPref(prefStr, str);
     }else{
       try{prefBranch.clearUserPref(prefStr);}catch(e){}
     }
@@ -415,10 +427,10 @@ function _getValues(o,isNew,byUser){
       o.autoOpen=prefBranch.getBoolPref(prefStr+"autoOpen");
     }catch(e){}
     try{
-      o.alias=prefBranch.getComplexValue(prefStr+"alias",Components.interfaces.nsISupportsString).data;
+      o.alias = getStringPref(prefStr + "alias");
     }catch(e){}
     try{
-      o.link=prefBranch.getComplexValue(prefStr+"link",Components.interfaces.nsISupportsString).data;
+      o.link = getStringPref(prefStr + "link");
     }catch(e){}
     try{
       o.interval=prefBranch.getIntPref(prefStr+"interval");
@@ -595,7 +607,7 @@ function onImport(){
             var s = Components.classes["@mozilla.org/supports-string;1"]
                     .createInstance(Components.interfaces.nsISupportsString);
             s.data = val[2];
-            prefBranch.setComplexValue(nm,Components.interfaces.nsISupportsString, s);
+            setStringPref(nm, s);
             break;
           case 1:
             prefBranch.setIntPref(nm,val[2]);
@@ -652,7 +664,7 @@ function onExport(){
       }
       switch(type){
       case Ci.nsIPrefBranch.PREF_STRING:
-        str+=nm+"\t0\t"+prefBranch.getComplexValue(o,Components.interfaces.nsISupportsString).data+"\r\n";
+        str += nm + "\t0\t" + getStringPref(o) + "\r\n";
         break;
       case Ci.nsIPrefBranch.PREF_INT:
         str+=nm+"\t1\t"+prefBranch.getIntPref(o)+"\r\n";
