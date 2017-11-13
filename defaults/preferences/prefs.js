@@ -23,7 +23,7 @@ pref("extensions.xnotifier.soundUrl","");
 pref("extensions.xnotifier.showStatusbarIcon",true);
 pref("extensions.xnotifier.enableToolbar",true);
 pref("extensions.xnotifier.showTabMenu",true);
-pref("extensions.xnotifier.showBookmarkMenu",true);
+pref("extensions.xnotifier.showBookmarkMenu",false);
 pref("extensions.xnotifier.startupOpenXN",false);
 pref("extensions.xnotifier.clearPasswdAlert",true);
 pref("extensions.xnotifier.menuShowData",true);
