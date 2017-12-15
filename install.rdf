@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
 	<Description about="urn:mozilla:install-manifest">
-		<em:id>{37fa1426-b82d-11db-8314-0800200c9a66}</em:id>
+		<em:id>{2660c70a-e370-4e3b-b531-52031f92f281}</em:id>
 		<em:type>2</em:type>
 		<em:version>3.5.23</em:version>
-    <em:name>X-notifier</em:name>
+    <em:name>Z-notifier</em:name>
 		<em:description>Notifies your webmails</em:description>
-		<em:creator>Byungwook Kang</em:creator>
+		<em:creator>Oriol Brufau</em:creator>
     <em:homepageURL>http://xnotifier.tobwithu.com/</em:homepageURL>
     
     

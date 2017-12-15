@@ -39,14 +39,14 @@ constants
 ***********************************************************/
 
 // UUID uniquely identifying our component
-const CLASS_ID = Components.ID("{e3ab0980-b4e1-11db-abbd-0800200c9a66}");
+const CLASS_ID = Components.ID("{90bb8a26-9d34-482c-a98a-1f2f0f34f8a1}");
 
 // description
 const CLASS_NAME = "X-notifier Service";
 
 // textual unique identifier
 const CONTRACT_ID = "@tobwithu.com/xnotifier;1";
-const ADDON_ID = "{37fa1426-b82d-11db-8314-0800200c9a66}";
+const ADDON_ID = "{2660c70a-e370-4e3b-b531-52031f92f281}";
 
 const Cc=Components.classes;
 const Ci=Components.interfaces;

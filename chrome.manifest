@@ -45,8 +45,8 @@ style	chrome://xnotifier/content/alert.xul chrome://messenger/skin/tabmail.css a
 style	chrome://xnotifier/content/alert.xul chrome://navigator/skin/tabbrowser.css application={92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}
 style	chrome://xnotifier/content/alert.xul	chrome://xnotifier/content/alert-mac.css os=Darwin
 
-component {e3ab0980-b4e1-11db-abbd-0800200c9a66} components/Main.js
-contract @tobwithu.com/xnotifier;1 {e3ab0980-b4e1-11db-abbd-0800200c9a66}
+component {90bb8a26-9d34-482c-a98a-1f2f0f34f8a1} components/Main.js
+contract @tobwithu.com/xnotifier;1 {90bb8a26-9d34-482c-a98a-1f2f0f34f8a1}
 component {71522470-9f8d-11e2-9e96-0800200c9a66} components/protocol.js
 contract @mozilla.org/network/protocol;1?name=xnotifier {71522470-9f8d-11e2-9e96-0800200c9a66}
 

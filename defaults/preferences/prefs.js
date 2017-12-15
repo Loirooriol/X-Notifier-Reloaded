@@ -43,8 +43,8 @@ pref("extensions.xnotifier.countTotal",0);
 pref("extensions.xnotifier.activityIcon",0);
 pref("extensions.xnotifier.iconLeftClick",0);
 pref("extensions.xnotifier.debug",0);
-pref("extensions.{37fa1426-b82d-11db-8314-0800200c9a66}.description", "chrome://xnotifier/locale/overlay.properties");
-pref("extensions.{37fa1426-b82d-11db-8314-0800200c9a66}.creator", "chrome://xnotifier/locale/overlay.properties");
-pref("extensions.{37fa1426-b82d-11db-8314-0800200c9a66}.translator", "chrome://xnotifier/locale/overlay.properties");
+pref("extensions.{2660c70a-e370-4e3b-b531-52031f92f281}.description", "chrome://xnotifier/locale/overlay.properties");
+pref("extensions.{2660c70a-e370-4e3b-b531-52031f92f281}.creator", "chrome://xnotifier/locale/overlay.properties");
+pref("extensions.{2660c70a-e370-4e3b-b531-52031f92f281}.translator", "chrome://xnotifier/locale/overlay.properties");
 
 
