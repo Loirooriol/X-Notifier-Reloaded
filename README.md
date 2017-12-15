@@ -19,6 +19,9 @@ Note these preferences will have no effect for Firefox Beta and Release. Conside
 ## Download and Install
 Available at release page: https://github.com/Loirooriol/Z-Notifier/releases
 
+## License
+Z-notifier is based on X-notifier, so it's also licensed under [GNU General Public License, version 2.0](http://www.gnu.org/licenses/gpl-2.0.html).
+
 ## Credit
 Thanks a lot [tobwithu](http://xnotifier.tobwithu.com), the creator of the original [X-notifier](https://addons.mozilla.org/firefox/addon/xnotifier/) extension.
 
