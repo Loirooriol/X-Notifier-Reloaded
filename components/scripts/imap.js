@@ -69,7 +69,7 @@ function process(aData,aHttp) {
   case ST_DATA+5:
     var fnd=aData.match(/\* SEARCH ?(.*)$/m);
     var n=0;
-    if(fnd)n=fnd[1]?fnd[1].split(" ").length:0;
+    if(fnd)n=fnd[1]?fnd[1].trim().split(" ").length:0;
     if(this.inboxOnly){
       if(!this.inboxDone){
         this.newData=n;
