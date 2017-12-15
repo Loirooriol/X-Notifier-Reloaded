@@ -335,7 +335,7 @@ Main.prototype.checkFirstrun=function(current){
       var os=Components.classes["@mozilla.org/xre/app-info;1"].getService(Components.interfaces.nsIXULRuntime).OS;
       if(os=="Darwin")this.prefBranch.setIntPref("alertOrigin",4);
     }
-    if (ver!=current){
+    if (false && ver!=current){
       this.prefBranch.setCharPref("version",current);
       this.postInstall();//for fx 2
       var timer = Components.classes["@mozilla.org/timer;1"].createInstance(Ci.nsITimer);
