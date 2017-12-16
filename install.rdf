@@ -7,7 +7,7 @@
     <em:name>Z-notifier</em:name>
 		<em:description>Notifies your webmails</em:description>
 		<em:creator>Oriol Brufau</em:creator>
-    <em:homepageURL>http://xnotifier.tobwithu.com/</em:homepageURL>
+    <em:homepageURL>https://github.com/Loirooriol/Z-Notifier/</em:homepageURL>
     
     
     <em:optionsURL>chrome://xnotifier/content/options.xul</em:optionsURL>
