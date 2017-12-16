@@ -34,6 +34,66 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+/***********************************************************
+Load default preferences
+/defaults/preferences/prefs.js is not automatically loaded since bug 1413413.
+***********************************************************/
+const prefService = Components.classes["@mozilla.org/preferences-service;1"]
+                              .getService(Ci.nsIPrefService);
+const defaultBranch = prefService.getDefaultBranch("extensions.xnotifier.");
+function pref(name, value) {
+  switch (typeof value) {
+    case "boolean": defaultBranch.setBoolPref(name, value); return;
+    case "number": defaultBranch.setIntPref(name, value); return;
+    case "string": defaultBranch.setCharPref(name, value); return;
+    default: throw new Error("Invalid preference value");
+  }
+}
+pref("startupDelay", 500);
+pref("updateInterval", 10);
+pref("maxConnections", 15);
+pref("connections", 4);
+pref("connectionDelay", 2000);
+pref("openInTab",true);
+pref("reuseTab",true);
+pref("reloadTab",true);
+pref("loadInBackground",false);
+pref("resetCounter",false);
+pref("checkOnStartup",true);
+pref("autoLoginDefaultAccount",true);
+pref("multiSession",true);
+pref("yahoo.showCaptcha",true);
+pref("showNotification",true);
+pref("notificationDelay",4000);
+pref("autoHideNotification",true);
+pref("alertOrigin",0);
+pref("alertTextStyle","");
+pref("alertSound",true);
+pref("customSound",false);
+pref("soundUrl","");
+pref("showStatusbarIcon",true);
+pref("enableToolbar",true);
+pref("showTabMenu",true);
+pref("showBookmarkMenu",false);
+pref("startupOpenXN",false);
+pref("clearPasswdAlert",true);
+pref("menuShowData",true);
+pref("menuWindow",true);
+pref("menuSidebar",true);
+pref("inboxOnly",true);
+pref("showFolders",true);
+pref("dataColWidth",10);
+pref("enabled",true);
+pref("keepSession",false);
+pref("keepSessionForNewTab",true);
+pref("shortcut.sidebar.key","X");
+pref("shortcut.sidebar.modifiers","accel,alt");
+pref("showToolbarText",true);
+pref("saveCookies",true);
+pref("countTotal",0);
+pref("activityIcon",0);
+pref("iconLeftClick",0);
+pref("debug",0);
 
 if(!com) var com={};
 if(!com.tobwithu) com.tobwithu={};
@@ -49,8 +109,6 @@ com.tobwithu.xnotifier = {
       return;
     }
     if(!this.p_getBoolPref("autoHideNotification"))this.closeWindow("alert:alert","xn_alert");
-    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                                .getService(Components.interfaces.nsIPrefService);
     var branch = prefService.getBranch("extensions.xnotifier.");
     var n=branch.getIntPref("iconLeftClick");
     if(n==1){
@@ -70,8 +128,6 @@ com.tobwithu.xnotifier = {
     this.main.checkAll(false);
   },
   onEnabled: function() {
-    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                                .getService(Components.interfaces.nsIPrefService);
     var branch = prefService.getBranch("extensions.xnotifier.");
     branch.setBoolPref("enabled",!branch.getBoolPref("enabled"));
   },
@@ -96,8 +152,6 @@ com.tobwithu.xnotifier = {
   },
 
   p_getBoolPref: function(name){
-    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                                .getService(Components.interfaces.nsIPrefService);
     var branch = prefService.getBranch("extensions.xnotifier.");
     return branch.getBoolPref(name);
   },
@@ -255,8 +309,6 @@ com.tobwithu.xnotifier = {
   onLoad: function() {
     var em=document.getElementById("xnotifier-key_openSidebar");
     if(em){
-      var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                                  .getService(Components.interfaces.nsIPrefService);
       var prefBranch = prefService.getBranch("extensions.xnotifier.shortcut.sidebar.");
       em.setAttribute("key",prefBranch.getCharPref("key"));
       em.setAttribute("modifiers",prefBranch.getCharPref("modifiers"));
@@ -376,8 +428,6 @@ com.tobwithu.xnotifier.dout(e);
     else return SuiteCustomizeToolbar(em);
   },
   toggleToolbarText:function(tf){
-    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                                .getService(Components.interfaces.nsIPrefService);
     var branch = prefService.getBranch("extensions.xnotifier.");
     branch.setBoolPref("showToolbarText",tf);
     

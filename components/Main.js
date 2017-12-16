@@ -59,7 +59,11 @@ const dout=Components.utils.reportError;
 const cm = Components.classes["@mozilla.org/cookiemanager;1"]
 .getService('nsICookieManager2' in Ci ? Ci.nsICookieManager2 : Ci.nsICookieManager);
 
+const prefService = Components.classes["@mozilla.org/preferences-service;1"]
+                              .getService(Ci.nsIPrefService);
+
 var enableDebug=0;
+
 /***********************************************************
 class definition
 ***********************************************************/
@@ -83,8 +87,6 @@ function Main() {
                                   .getService(Ci.nsIPasswordManager);
   }
   //init preferences
-  var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                              .getService(Ci.nsIPrefService);
   this.prefBranch = prefService.getBranch("extensions.xnotifier.");
 
   //delete later 2012-10-05////////////////////////////////////
@@ -521,8 +523,6 @@ Main.prototype.loadScript = function(id,isTemp) {
 }
 Main.prototype.buildTable = function(onInit) {
   this.stopAll();
-  var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                              .getService(Ci.nsIPrefService);
   //delete later 2012-10-05////////////////////////////////////
   if(this.convertAccounts){
     delete this.convertAccounts;
@@ -1250,8 +1250,6 @@ Main.prototype.openXN = function(){
       "chrome,toolbar=yes,dialog=no,resizable").focus();
 }
 Main.prototype.openOptions = function(s) {
-  var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                              .getService(Ci.nsIPrefService);
   var branch = prefService.getBranch("browser.preferences.");
   var instantApply= branch.getBoolPref("instantApply");
   var features = "chrome,titlebar,toolbar,centerscreen" + (instantApply ? ",dialog=no" : ",modal");
@@ -1412,8 +1410,6 @@ dout(e);
         }
       }
 
-      var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                                .getService(Ci.nsIPrefService);
       var prefBranch = prefService.getBranch("");
       try{ prefBranch.deleteBranch("extensions.xnotifier."); }catch(e){}
       prefService.savePrefFile(null);
@@ -1749,11 +1745,9 @@ Main.prototype.deleteFile=function(name){
 Main.prototype.removeHost=function(aHostID){
   try{
     this.prefBranch.deleteBranch("accounts.["+aHostID);
-    var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                              .getService(Ci.nsIPrefService);
     prefService.savePrefFile(null);
   }catch(e){
-dout(e);
+    dout(e);
   }
   for(var o of this.handlers){
     if(o.id==aHostID){
@@ -1767,8 +1761,6 @@ Main.prototype.getAutoLoginDefaultAccount=function(){
   var b=this.prefBranch.getBoolPref("autoLoginDefaultAccount");
   if(b){
     try{
-      var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                                  .getService(Ci.nsIPrefService);
       var branch = prefService.getBranch("browser.privatebrowsing.");
       if(branch.getBoolPref("autostart")){
         return false;
@@ -1785,8 +1777,6 @@ Main.prototype.addContentHandler=function(){
   }catch(e){}
 }
 Main.prototype.removeContentHandler=function(){
-  var prefService = Components.classes["@mozilla.org/preferences-service;1"]
-                              .getService(Ci.nsIPrefService);
   var branch;
   for(var i=0;;i++){
     branch=prefService.getBranch("browser.contentHandlers.types."+i+".");
