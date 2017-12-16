@@ -1,5 +1,5 @@
 /***********************************************************
-Yahoo XN 4.1.3 to vs 3 (re-implement cookieManager)
+Yahoo
 ***********************************************************/
  var supportInboxOnly=true;
  var supportShowFolders=true;
@@ -32,6 +32,11 @@ function init(){
 function checkLogin(aData){
   switch(this.stage){
   case ST_CHECK:
+    if(this.cookies){
+      this.stage=ST_DATA;
+      this.setCookies();
+      return true;
+    }
     this.getHtml(this.viewURL);
     return false;
   case ST_CHECK+1:
@@ -276,6 +281,10 @@ function getData(aData){
   return obj;
 }
 function getViewURL(aFolder){
+  if((this.mode==3)&&aFolder&&this.dataURLCopy){
+    var url=this.dataURLCopy+"/folders/"+encodeURIComponent(aFolder);
+    return url;
+  }
   if((this.mode==2||this.mode==0)&&aFolder&&this.dataURLCopy){
     var url=this.dataURLCopy+"&fid="+encodeURIComponent(aFolder);
     return url;
