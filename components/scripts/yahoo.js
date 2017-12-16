@@ -155,7 +155,7 @@ function getData(aData){
   if(!this.isLoggedIn(aData))return obj;
 
   if(this.mode==-1||this.mode==3){
-    fnd=aData.match(/,"folders":{[\s\S]+?},"mailboxes"/);
+    fnd=aData.match(/,"folders":{[\s\S]+?},"savedSearches"/);
     if(fnd)this.mode=3;
     else this.mode=-1;
   }
