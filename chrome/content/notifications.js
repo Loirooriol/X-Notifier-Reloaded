@@ -67,14 +67,14 @@ var gNotificationsDialog = {
     fp.init(window, document.getElementById("bundlePreferences").getString("soundFilePickerTitle"), nsIFilePicker.modeOpen);
     fp.appendFilters(nsIFilePicker.filterAll);
 
-    var ret = fp.show();
-    if (ret == nsIFilePicker.returnOK)
-    {
-      var mailnewsSoundFileUrl = document.getElementById("soundUrlLocation");
+    fp.open((rv) => {
+      if (rv == nsIFilePicker.returnOK) {
+        var mailnewsSoundFileUrl = document.getElementById("soundUrlLocation");
 
-      document.getElementById("pref-soundUrl").value = fp.fileURL.spec;
-      this.readSoundLocation(); // XXX We shouldn't have to be doing this by hand
-    }
+        document.getElementById("pref-soundUrl").value = fp.fileURL.spec;
+        this.readSoundLocation(); // XXX We shouldn't have to be doing this by hand
+      }
+    });
   },
 };
 

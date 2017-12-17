@@ -565,66 +565,66 @@ function onImport(){
   fp.init(window, "Import",Ci.nsIFilePicker.modeOpen);
   fp.appendFilter ("X-notifier data","*.xn");
   fp.appendFilters(Ci.nsIFilePicker.filterAll);
-  var rv = fp.show();
-  if (rv == Ci.nsIFilePicker.returnOK)
-  {
-    var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
-                          .getService(Components.interfaces.nsIPromptService);
-    var param = {value: null};
-    var result = prompts.promptPassword(null, getString("importPromptTitle"), getString("importPromptText"),param,null,{});
-    if(!param.value)return;
+  fp.open((rv) => {
+    if (rv == Ci.nsIFilePicker.returnOK) {
+      var prompts = Components.classes["@mozilla.org/embedcomp/prompt-service;1"]
+                            .getService(Components.interfaces.nsIPromptService);
+      var param = {value: null};
+      var result = prompts.promptPassword(null, getString("importPromptTitle"), getString("importPromptText"),param,null,{});
+      if(!param.value)return;
 
-    var file=fp.file;
-    var str=appMain.loadFile0(file).replace(/\r\n/g,"\n");
+      var file=fp.file;
+      var str=appMain.loadFile0(file).replace(/\r\n/g,"\n");
 
-    var re=/\[---(.+?)---\]\n([\s\S]+?)\n(?=\[--)/g;
-    var o;
-    while ((o = re.exec(str)) != null){
-      if(o[1]=="<info>"){
-        var p=AesCtr.decrypt(o[2],param.value,256);
-        if(p!=p.match(/\d+/)){
-          prompts.alert(null, getString("importPromptTitle"), getString("importWrongPassword"));
-          return;
-        }
-      }else if(o[1]=="<accounts>"){
-        var ar=o[2].split("\n");
-        for(var t of ar){
-          t=AesCtr.decrypt(t,param.value,256);
-          var ac=t.split("\t");
-          _addAcount(ac[0],ac[1],ac[2]);
-        }
-      }else if(o[1]=="<preferences>"){
-        var ar=o[2].split("\n");
-        for(var t of ar){
-          var val=t.split("\t");
-          var nm=val[0];
-          if(nm=="soundUrl"&&nm.indexOf("://")==-1)continue;
-          if(nm=="soundData")continue;
-          if(nm=="notificationTime")continue;
-          nm="extensions.xnotifier."+nm;
-          switch(parseInt(val[1])){
-          case 0:
-            var s = Components.classes["@mozilla.org/supports-string;1"]
-                    .createInstance(Components.interfaces.nsISupportsString);
-            s.data = val[2];
-            setStringPref(nm, s);
-            break;
-          case 1:
-            prefBranch.setIntPref(nm,val[2]);
-            break;
-          case 2:
-            prefBranch.setBoolPref(nm,val[2]=="true");
-            break;
+      var re=/\[---(.+?)---\]\n([\s\S]+?)\n(?=\[--)/g;
+      var o;
+      while ((o = re.exec(str)) != null){
+        if(o[1]=="<info>"){
+          var p=AesCtr.decrypt(o[2],param.value,256);
+          if(p!=p.match(/\d+/)){
+            prompts.alert(null, getString("importPromptTitle"), getString("importWrongPassword"));
+            return;
           }
+        }else if(o[1]=="<accounts>"){
+          var ar=o[2].split("\n");
+          for(var t of ar){
+            t=AesCtr.decrypt(t,param.value,256);
+            var ac=t.split("\t");
+            _addAcount(ac[0],ac[1],ac[2]);
+          }
+        }else if(o[1]=="<preferences>"){
+          var ar=o[2].split("\n");
+          for(var t of ar){
+            var val=t.split("\t");
+            var nm=val[0];
+            if(nm=="soundUrl"&&nm.indexOf("://")==-1)continue;
+            if(nm=="soundData")continue;
+            if(nm=="notificationTime")continue;
+            nm="extensions.xnotifier."+nm;
+            switch(parseInt(val[1])){
+            case 0:
+              var s = Components.classes["@mozilla.org/supports-string;1"]
+                      .createInstance(Components.interfaces.nsISupportsString);
+              s.data = val[2];
+              setStringPref(nm, s);
+              break;
+            case 1:
+              prefBranch.setIntPref(nm,val[2]);
+              break;
+            case 2:
+              prefBranch.setBoolPref(nm,val[2]=="true");
+              break;
+            }
+          }
+          prefService.savePrefFile(null);
+          _loadDefault();
+        }else{
+          main.addScript(o[1],o[2]);
         }
-        prefService.savePrefFile(null);
-        _loadDefault();
-      }else{
-        main.addScript(o[1],o[2]);
       }
+      checkDefault();
     }
-    checkDefault();
-  }
+  });
 }
 function onExport(){
   var fp = Components.classes["@mozilla.org/filepicker;1"]
@@ -634,55 +634,55 @@ function onExport(){
   fp.defaultExtension="xn";
   fp.appendFilter ("X-notifier data","*.xn");
   fp.appendFilters(Ci.nsIFilePicker.filterAll);
-  var rv = fp.show();
-  if (rv == Ci.nsIFilePicker.returnOK||rv == Ci.nsIFilePicker.returnReplace)
-  {
-    var params = {out:null};
-    var features = "chrome,titlebar,toolbar,centerscreen,modal";
-    window.openDialog("chrome://xnotifier/content/passwddlg.xul","",features,params).focus();
-    if(!params.out||!params.out.value)return;
+  fp.open((rv) => {
+    if (rv == Ci.nsIFilePicker.returnOK || rv == Ci.nsIFilePicker.returnReplace) {
+      var params = {out:null};
+      var features = "chrome,titlebar,toolbar,centerscreen,modal";
+      window.openDialog("chrome://xnotifier/content/passwddlg.xul","",features,params).focus();
+      if(!params.out||!params.out.value)return;
 
-    var file=fp.file;
-    var str="[---<info>---]\r\n";
-    var token=Math.random().toString().substring(2);
-    str+=AesCtr.encrypt(token,params.out.value,256)+"\r\n";
-    var ar=appMain.getScriptList({});
-    for(var o of ar){
-      str+="[---"+o+"---]\r\n";
-      str+=appMain.loadFile("xnotifier/"+o+".js")+"\r\n";
-    }
+      var file=fp.file;
+      var str="[---<info>---]\r\n";
+      var token=Math.random().toString().substring(2);
+      str+=AesCtr.encrypt(token,params.out.value,256)+"\r\n";
+      var ar=appMain.getScriptList({});
+      for(var o of ar){
+        str+="[---"+o+"---]\r\n";
+        str+=appMain.loadFile("xnotifier/"+o+".js")+"\r\n";
+      }
 
-    str+="[---<preferences>---]\r\n";
-    var ar=prefBranch.getChildList("extensions.xnotifier.",{});
-    for(var o of ar){
-      var type=prefBranch.getPrefType(o);
-      var nm=o.replace(/^extensions.xnotifier./,"");
-      if(nm=="version")continue;
-      if(nm=="countTotal")continue;
-      if(nm.match(/^accounts\.\[(yahoo|gmail)#\S+?\]\.cookie$/)){
-        continue;
+      str+="[---<preferences>---]\r\n";
+      var ar=prefBranch.getChildList("extensions.xnotifier.",{});
+      for(var o of ar){
+        var type=prefBranch.getPrefType(o);
+        var nm=o.replace(/^extensions.xnotifier./,"");
+        if(nm=="version")continue;
+        if(nm=="countTotal")continue;
+        if(nm.match(/^accounts\.\[(yahoo|gmail)#\S+?\]\.cookie$/)){
+          continue;
+        }
+        switch(type){
+        case Ci.nsIPrefBranch.PREF_STRING:
+          str += nm + "\t0\t" + getStringPref(o) + "\r\n";
+          break;
+        case Ci.nsIPrefBranch.PREF_INT:
+          str+=nm+"\t1\t"+prefBranch.getIntPref(o)+"\r\n";
+          break;
+        case Ci.nsIPrefBranch.PREF_BOOL:
+          str+=nm+"\t2\t"+prefBranch.getBoolPref(o)+"\r\n";
+          break;
+        }
       }
-      switch(type){
-      case Ci.nsIPrefBranch.PREF_STRING:
-        str += nm + "\t0\t" + getStringPref(o) + "\r\n";
-        break;
-      case Ci.nsIPrefBranch.PREF_INT:
-        str+=nm+"\t1\t"+prefBranch.getIntPref(o)+"\r\n";
-        break;
-      case Ci.nsIPrefBranch.PREF_BOOL:
-        str+=nm+"\t2\t"+prefBranch.getBoolPref(o)+"\r\n";
-        break;
+      str+="[---<accounts>---]\r\n";
+      var n=appMain.getAccountsNumber();
+      for(var i=0;i<n;i++){
+        var o=appMain.getAccountInfo(i);
+        str+=AesCtr.encrypt(o.id+"\t"+o.user+"\t"+o.password+"\t"+token,params.out.value,256)+"\r\n";
       }
+      str+="[------]";
+      appMain.saveFile0(file,str);
     }
-    str+="[---<accounts>---]\r\n";
-    var n=appMain.getAccountsNumber();
-    for(var i=0;i<n;i++){
-      var o=appMain.getAccountInfo(i);
-      str+=AesCtr.encrypt(o.id+"\t"+o.user+"\t"+o.password+"\t"+token,params.out.value,256)+"\r\n";
-    }
-    str+="[------]";
-    appMain.saveFile0(file,str);
-  }
+  });
 }
 function checkIsNew(){
   var user=document.getElementById("username").value;

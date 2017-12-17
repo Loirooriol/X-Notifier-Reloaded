@@ -458,11 +458,11 @@ com.tobwithu.xnotifier.dout(e);
     fp.defaultExtension="log";
     fp.appendFilter ("X-notifier log","*.log");
     fp.appendFilters(Ci.nsIFilePicker.filterAll);
-    var rv = fp.show();
-    if (rv == Ci.nsIFilePicker.returnOK||rv == Ci.nsIFilePicker.returnReplace)
-    {
-      this.main.saveFile0(fp.file,this.main.log);
-    }
+    fp.open((rv) => {
+      if (rv == Ci.nsIFilePicker.returnOK || rv == Ci.nsIFilePicker.returnReplace) {
+        this.main.saveFile0(fp.file,this.main.log);
+      }
+    });
   }
 };
 
