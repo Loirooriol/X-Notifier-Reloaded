@@ -51,6 +51,31 @@ var autoLogin;
 var appMain;
 var current;
 
+// Since bug 1379338, chrome://global/content/preferencesBindings.js exposes a Preferences
+// object that should be used to define the properties.
+if (typeof Preferences != "undefined") {
+  Preferences.addAll([
+    { id: "pref-checkOnStartup", name: "extensions.xnotifier.checkOnStartup", type: "bool" },
+    { id: "pref-autoLoginDefaultAccount", name: "extensions.xnotifier.autoLoginDefaultAccount", type: "bool" },
+    { id: "pref-multiSession", name: "extensions.xnotifier.multiSession", type: "bool" },
+    { id: "pref-keepSession", name: "extensions.xnotifier.keepSession", type: "bool" },
+    { id: "pref-interval", name: "extensions.xnotifier.updateInterval", type: "int" },
+    { id: "pref-openintab", name: "extensions.xnotifier.openInTab", type: "bool" },
+    { id: "pref-resetCounter", name: "extensions.xnotifier.resetCounter", type: "bool" },
+    { id: "pref-reuseTab", name: "extensions.xnotifier.reuseTab", type: "bool" },
+    { id: "pref-reloadTab", name: "extensions.xnotifier.reloadTab", type: "bool" },
+    { id: "pref-showNotification", name: "extensions.xnotifier.showNotification", type: "bool" },
+    { id: "pref-autoHideNotification", name: "extensions.xnotifier.autoHideNotification", type: "bool" },
+    { id: "pref-alertSound", name: "extensions.xnotifier.alertSound", type: "bool" },
+    { id: "pref-showStatusbarIcon", name: "extensions.xnotifier.showStatusbarIcon", type: "bool" },
+    { id: "pref-showTabMenu", name: "extensions.xnotifier.showTabMenu", type: "bool" },
+    { id: "pref-startupOpenXN", name: "extensions.xnotifier.startupOpenXN", type: "bool" },
+    { id: "pref-menuWindow", name: "extensions.xnotifier.menuWindow", type: "bool" },
+    { id: "pref-menuSidebar", name: "extensions.xnotifier.menuSidebar", type: "bool" },
+    { id: "pref-yahooCaptcha", name: "extensions.xnotifier.yahoo.showCaptcha", type: "bool" },
+  ]);
+}
+
 function onLoad() {
   if(!checkMasterPasswords()){
     window.close();
@@ -730,9 +755,8 @@ function toggleSubitem(parent,child){
   document.getElementById(child).disabled=!document.getElementById(parent).checked;
 }
 function showAdvancedSound(){
-  document.documentElement
-          .openSubDialog("chrome://xnotifier/content/notifications.xul",
-                          "", null);
+  openDialog("chrome://xnotifier/content/notifications.xul",
+             "", "modal,centerscreen,resizable=no", null);
 }
 function onKeyDown(ev){
   if(ev.keyCode==46)onDelete();
@@ -822,9 +846,8 @@ var main={
     }
   },
   showScripts:function(){
-    document.documentElement
-            .openSubDialog("chrome://xnotifier/content/pref-script.xul",
-                            "", this);
+    openDialog("chrome://xnotifier/content/pref-script.xul",
+               "", "modal,centerscreen,resizable=no", this);
   },
   addScript:function(fname,str){
     var isInstalled=appMain.isInstalled(fname);

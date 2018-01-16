@@ -2,13 +2,16 @@
 <?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
 <?xml-stylesheet href="chrome://xnotifier/content/pref.css" type="text/css"?>
 <!DOCTYPE prefwindow SYSTEM "chrome://xnotifier/locale/overlay.dtd">
-<prefwindow title="&options-title;"
-            id="xnotifier-pref"
-            xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+<dialog class="prefwindow"
+      title="&options-title;"
+      id="xnotifier-pref"
+      xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+      buttons="accept,cancel,help"
       ondialogaccept="onAccept()"
-	    ondialogcancel="onCancel()"
+      ondialogcancel="onCancel()"
       ondialoghelp="onHelp()"
       onload="onLoad()">
+  <script type="application/javascript" src="chrome://global/content/preferencesBindings.js"/>
   <script type="application/x-javascript" src="options.js"/>
   <script type="application/x-javascript" src="aes.js"/>
   <stringbundleset>
@@ -204,4 +207,4 @@
       </tabpanels>
     </tabbox>
   </prefpane>
-</prefwindow>
+</dialog>
