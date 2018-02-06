@@ -1,5 +1,10 @@
 //@line 36 "/cygdrive/c/builds/tinderbox/Tb-Mozilla1.8.0-Release/WINNT_5.2_Depend/mozilla/mail/components/preferences/notifications.js"
 
+Preferences.addAll([
+  { id: "pref-customSound", name: "extensions.xnotifier.customSound", type: "bool" },
+  { id: "pref-soundUrl", name: "extensions.xnotifier.soundUrl", type: "string" },
+]);
+
 var gNotificationsDialog = {
   mSound: null,
 
@@ -22,7 +27,7 @@ var gNotificationsDialog = {
   readSoundLocation: function()
   {
     var soundUrlLocation = document.getElementById('soundUrlLocation');
-    soundUrlLocation.value = document.getElementById("pref-soundUrl").value;
+    soundUrlLocation.value = Preferences.get("pref-soundUrl").value;
     var f=this.convertURLToLocalFile(soundUrlLocation.value)
     if(f!=null){
       soundUrlLocation.label = f.leafName;    
@@ -71,7 +76,7 @@ var gNotificationsDialog = {
       if (rv == nsIFilePicker.returnOK) {
         var mailnewsSoundFileUrl = document.getElementById("soundUrlLocation");
 
-        document.getElementById("pref-soundUrl").value = fp.fileURL.spec;
+        Preferences.get("pref-soundUrl").value = fp.fileURL.spec;
         this.readSoundLocation(); // XXX We shouldn't have to be doing this by hand
       }
     });

@@ -7,12 +7,14 @@
   %notificationsDTD;
 ]>
 
-<prefwindow id="SoundNotificationsDialog" type="child"
-            xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-            dlgbuttons="accept,cancel"
-            style="width: &window.width; !important;"
-            title="&notificationsDialog.title;">
-
+<dialog class="prefwindow" type="child"
+        id="SoundNotificationsDialog"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        dlgbuttons="accept,cancel"
+        style="width: &window.width; !important;"
+        title="&notificationsDialog.title;">
+  <script type="application/javascript" src="chrome://global/content/preferencesBindings.js"/>
+  <script type="application/javascript" src="mockPreferencesBindings.js"/>
   <prefpane id="NotificationsDialogPane" onpaneload="gNotificationsDialog.init();">
     <script type="application/x-javascript" src="chrome://xnotifier/content/notifications.js"/>
 
@@ -54,4 +56,4 @@
 
     <separator/>
   </prefpane>
-</prefwindow>
+</dialog>
