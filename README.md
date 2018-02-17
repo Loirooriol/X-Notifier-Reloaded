@@ -4,7 +4,7 @@ Z-notifier is a Firefox add-on that checks your webmail accounts and notifies th
 It's a fork of [X-notifier](https://addons.mozilla.org/firefox/addon/xnotifier/) [3.5.23](https://addons.mozilla.org/firefox/addon/xnotifier/versions/3.5.23), fixed to make it work on latest Firefox versions.
 
 ## Requirements
-Z-Notifier should work on Firefox Firefox 25 - 59.
+Z-Notifier should work on Firefox 25 - 59, and possibly Firefox 60.
 
 But since Firefox 57, you may need to change some Firefox preferences in `about:config`:
  - `extensions.legacy.enabled = true` allows legacy extensions.
