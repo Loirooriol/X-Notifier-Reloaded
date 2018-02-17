@@ -151,3 +151,8 @@ toolbar .xnotifier-bookmark-button[newMsg="true"] .toolbarbutton-icon{
 toolbar .xnotifier-bookmark-button[newMsg="false"] .toolbarbutton-icon{
  opacity:0.4;
 }
+
+/* Removed from Firefox in bug 1418459 */
+menuitem[description] {
+  -moz-binding: url("chrome://xnotifier/content/bindings.xml#menuitem-iconic-desc-noaccel");
+}
