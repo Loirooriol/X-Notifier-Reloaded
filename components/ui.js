@@ -52,7 +52,8 @@ Main.prototype._openTab =function(url,name,reuse,viewDomain,sessionId,newWin,par
       var tabbrowser = win.getBrowser();
       for (var i = 0;i< tabbrowser.tabContainer.childNodes.length;i++){
         var tab = tabbrowser.tabContainer.childNodes[i];
-        if (tab.hasAttribute("xntab")&&tab.getAttribute("xntab")==name) {
+        // Checking tab.linkedPanel skips lazy tabs
+        if (tab.linkedPanel && tab.hasAttribute("xntab") && tab.getAttribute("xntab")==name) {
           var browser=tabbrowser.getBrowserForTab(tab);
           if(this.canReuse(browser.currentURI,viewDomain)&&(!this.multiSession||calcSid(tab.getAttribute("xnsid"))==calcSid(sessionId))){
             if(this.prefBranch.getBoolPref("reloadTab")||(!this.multiSession&&tab.getAttribute("xnid")!=sessionId)||!viewDomain){
@@ -101,23 +102,26 @@ Main.prototype._openTab =function(url,name,reuse,viewDomain,sessionId,newWin,par
     win.focus();
   }
 }
-Main.prototype.setSessionId = function(win,tab,sid){
-  if(sid==null||sid.toString()=="")sid=-1;
-  if(sid==-1){
-    var tabbrowser=win.getBrowser();
-    var browser=tabbrowser.getBrowserForTab(tab);
-    var doc=browser.contentDocument;
-    try{
-      if(doc.com&&doc.com.tobwithu&&doc.com.tobwithu.xnotifier){
-        if(Object.defineProperty){
-          Object.defineProperty(doc, 'cookie', {});
-        }
+Main.prototype.setSessionId = function(win, tab, sid) {
+  if (sid == null || sid.toString() == "") {
+    sid = -1;
+  }
+  var browser = win.gBrowser.getBrowserForTab(tab);
+  var doc = browser.contentDocument;
+  if (doc) {
+    if (sid == -1) {
+      Object.defineProperty(doc, "cookie", {});
+    } else if (!doc.com || !doc.com.tobwithu || !doc.com.tobwithu.xnotifier) {
+      this.initCookieHandler(doc, tab, sid);
+      var wpl = Ci.nsIWebProgressListener;
+      try {
+        browser.addProgressListener(this, wpl.STATE_START|wpl.STATE_IS_REQUEST);
+      } catch (err) {
+        // Already added
       }
-    }catch(e){
-dout("***"+e);
     }
   }
-  tab.setAttribute("xnsid",sid);
+  tab.setAttribute("xnsid", sid);
 }
 Main.prototype.openNewWindow = function() {
     var win=Components.classes["@mozilla.org/appshell/appShellService;1"]

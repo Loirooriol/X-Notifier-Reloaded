@@ -1515,14 +1515,7 @@ Main.prototype.onStateChange=function(webProgress, request, state, status) {
     }
   }
 }
-Main.prototype.onLocationChange=function(webProgress, request, location) {
-}
-Main.prototype.onProgressChange=function(webProgress, request, curSelfProgress) {
-}
-Main.prototype.onSecurityChange=function(webProgress, request, state) {
-}
-Main.prototype.onStatusChange=function(webProgress, request, status, message) {
-}
+
 Main.prototype.onUninstalling=function(addon,restart){
   if(addon.id==ADDON_ID){
     this.uninstall=true;

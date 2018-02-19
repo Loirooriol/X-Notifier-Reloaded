@@ -45,10 +45,12 @@ if(com.tobwithu.xnotifier.p_getBoolPref("multiSession")){
       com.tobwithu.wmn.nsIWebMailNotifier.onStateChange(browser,webProgress, request, state, status);
       }
     });*///has fewer information
-    gBrowser.tabContainer.addEventListener("TabOpen",function(event){
+    /* To avoid premature insertion of lazy browsers, addProgressListener is now added in setSessionId
+       instead of whenever a tab is opened. */
+    /*gBrowser.tabContainer.addEventListener("TabOpen",function(event){
         var browser = gBrowser.getBrowserForTab(event.target);
         browser.addProgressListener(com.tobwithu.xnotifier.main);
-    }, false);
+    }, false);*/
     /* The following loop allows mail tabs opened by X-Notifier to still work properly after closing
        and restoring the browser. However, it prevents the optimization achieved in bug 1345090
        (https://bugzilla.mozilla.org/show_bug.cgi?id=1345090), so the browser takes much more time
