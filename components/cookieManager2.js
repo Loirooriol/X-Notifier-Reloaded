@@ -48,7 +48,7 @@ CookieManager.prototype={
       if (cm.cookieExists){
 //dout(val);
 //dout(val.getDomain()+this.ext+","+val.getPath()+","+val.name+" "+val.value+","+val.secure+","+val.httponly+","+!val.expires+","+val.getExpiry());
-        cm.add(val.getDomain()+this.ext,val.getPath(),val.name,val.value,val.secure,val.httponly,!val.expires,val.getExpiry());
+        cm.add(val.getDomain()+this.ext,val.getPath(),val.name,val.value,val.secure,val.httponly,!val.expires,val.getExpiry(),{});
       }else{//ff2
         cm.add(val.getDomain()+this.ext,val.getPath(),val.name,val.value,val.secure,!val.expires,val.getExpiry());
       }
@@ -133,7 +133,7 @@ CookieManager.prototype={
             var host=ck.host.substring(0,ck.host.length-this.ext.length);
             if(dst)host+=dst.ext;
             if (cm.cookieExists){
-              cm.add(host,ck.path,ck.name,ck.value,ck.isSecure,ck.isHttpOnly,ck.isSession,ck.expiry);
+              cm.add(host,ck.path,ck.name,ck.value,ck.isSecure,ck.isHttpOnly,ck.isSession,ck.expiry,ck.originAttributes);
             }else{//ff2
               cm.add(host,ck.path,ck.name,ck.value,ck.isSecure,ck.isSession,ck.expiry);
             }
@@ -149,7 +149,7 @@ CookieManager.prototype={
       if (ck && ck instanceof Components.interfaces.nsICookie2){
         if(endsWith(ck.host,this.ext)){
           try{
-            cm.remove(ck.host,ck.name,ck.path,false,{});
+            cm.remove(ck.host,ck.name,ck.path,false,ck.originAttributes);
           }catch(e){
             cm.remove(ck.host,ck.name,ck.path,false);
           }
