@@ -97,6 +97,7 @@ pref("debug",0);
 
 if(!com) var com={};
 if(!com.tobwithu) com.tobwithu={};
+var newMsg = false;
 com.tobwithu.xnotifier = {
   dout:Components.utils.reportError,
 
@@ -115,10 +116,8 @@ com.tobwithu.xnotifier = {
       this.onCheckNow();
       return;
     }
-    var elm=document.getElementById("xnotifier-statusbar");
     var openAll=aEvent && (aEvent.button == 0&&(aEvent.altKey||aEvent.metaKey));
-    if(!openAll&&elm.getAttribute("newMsg")!="true"&&this.info.length>0){
-    //if(this.info.length==1){
+    if (!openAll && !newMsg && this.info.length>0){
       this.main.openView(this.info[0].ind,null);
       return;
     }
@@ -260,6 +259,7 @@ com.tobwithu.xnotifier = {
       elm.setAttribute("newMsg", total>0);
       elm.setAttribute("value",total>0?total:"");
     }
+    newMsg = total > 0;
   },
 
   /**********************************************************/
