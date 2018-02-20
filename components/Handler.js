@@ -34,6 +34,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+var {Services} = Components.utils.import("resource://gre/modules/Services.jsm", {});
+
 /***********************************************************
 constants
 ***********************************************************/
@@ -428,9 +430,19 @@ Handler.prototype.getHtml = function(aURL,aPostData,aHeaders,aMethod) {
     aMethod=aURL[3];
     aURL=aURL[0];
   }
-  var ioService = Components.classes["@mozilla.org/network/io-service;1"].getService(Ci.nsIIOService);
-  var uri = ioService.newURI(aURL, null, null);
-  var channel = ioService.newChannelFromURI(uri);
+  var uri = Services.io.newURI(aURL, null, null);
+  if (Services.io.newChannelFromURI2) {
+    var channel = Services.io.newChannelFromURI2(
+      uri,
+      null,
+      Services.scriptSecurityManager.getSystemPrincipal(),
+      null,
+      Ci.nsILoadInfo.SEC_ALLOW_CROSS_ORIGIN_DATA_IS_NULL,
+      Ci.nsIContentPolicy.TYPE_OTHER
+    );
+  } else {
+    var channel = Services.io.newChannelFromURI(uri);
+  }
   var httpChannel = channel.QueryInterface(Ci.nsIHttpChannel);
   if (aPostData||aPostData=="") {
     var uploadStream = Components.classes["@mozilla.org/io/string-input-stream;1"]
