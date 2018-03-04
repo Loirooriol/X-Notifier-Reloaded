@@ -69,16 +69,16 @@ toolbar #xnotifier-toolbar-button .xnotifier-toolbar-ani,
 toolbar[iconsize="large"] #xnotifier-toolbar-button .xnotifier-toolbar-value{
  font-size:12px;
 }
-toolbar #xnotifier-toolbar-button[newMsg="true"]{
+#xnotifier-toolbar-button[newMsg="true"]{
   -moz-image-region: rect(24px 16px 40px 0px);
 }
-toolbar #xnotifier-toolbar-button[newMsg="false"]{
+#xnotifier-toolbar-button[newMsg="false"]{
   -moz-image-region: rect(24px 32px 40px 16px);
 }
-toolbar #xnotifier-toolbar-button[enabled="true"] .toolbarbutton-icon2{
+#xnotifier-toolbar-button[enabled="true"] .toolbarbutton-icon2{
   display:none;
 }
-toolbar #xnotifier-toolbar-button[enabled="false"] .toolbarbutton-icon2{
+#xnotifier-toolbar-button[enabled="false"] .toolbarbutton-icon2{
   -moz-image-region: rect(24px 48px 40px 32px);
 }
 
@@ -97,18 +97,6 @@ toolbar #xnotifier-toolbar-button[enabled="false"] .toolbarbutton-icon2{
   max-width:32px;
   margin:0px 0px;
   font-size:12px;
-}
-#xnotifier-toolbar-button[cui-areatype="menu-panel"][newMsg="true"]{
-  -moz-image-region: rect(40px 32px 72px 0px);
-}
-#xnotifier-toolbar-button[cui-areatype="menu-panel"][newMsg="false"]{
-  -moz-image-region: rect(40px 64px 72px 32px);
-}
-#xnotifier-toolbar-button[cui-areatype="menu-panel"][enabled="true"] .toolbarbutton-icon2{
-  display:none;
-}
-#xnotifier-toolbar-button[cui-areatype="menu-panel"][enabled="false"] .toolbarbutton-icon2{
-  -moz-image-region: rect(40px 96px 72px 64px);
 }
 #xnotifier-toolbar-button[cui-areatype="menu-panel"] .toolbarbutton-text{
   line-height: 1.1;
