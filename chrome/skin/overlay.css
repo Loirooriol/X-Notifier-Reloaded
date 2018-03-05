@@ -98,6 +98,8 @@ toolbar[iconsize="large"] #xnotifier-toolbar-button .xnotifier-toolbar-value{
   margin:0px 0px;
   font-size:12px;
 }
+
+/* Bigger icons for Australis' hamburguer menu */
 #PanelUI-mainView #xnotifier-toolbar-button[cui-areatype="menu-panel"][newMsg="true"]{
   -moz-image-region: rect(40px 32px 72px 0px);
 }
@@ -107,6 +109,7 @@ toolbar[iconsize="large"] #xnotifier-toolbar-button .xnotifier-toolbar-value{
 #PanelUI-mainView #xnotifier-toolbar-button[cui-areatype="menu-panel"][enabled="false"] .toolbarbutton-icon2{
   -moz-image-region: rect(40px 96px 72px 64px);
 }
+
 #xnotifier-toolbar-button[cui-areatype="menu-panel"] .toolbarbutton-text{
   line-height: 1.1;
   max-height: 2.2em;
