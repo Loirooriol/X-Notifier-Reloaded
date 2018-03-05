@@ -185,9 +185,22 @@ com.tobwithu.xnotifier.bookmark=function(){
                       .getService(Components.interfaces.nsIIOService);
   var uri = ios.newURI(str, null, null);
   var bmsvc = Components.classes["@mozilla.org/browser/nav-bookmarks-service;1"]
-                                   .getService(Components.interfaces.nsINavBookmarksService);
-  var ar = bmsvc.getBookmarkIdsForURI(uri, {});
-  if(ar.length==0)bmsvc.insertBookmark(newFolderId, uri, bmsvc.DEFAULT_INDEX,browser.contentTitle);
+                        .getService(Components.interfaces.nsINavBookmarksService);
+  function insertBookmark() {
+    bmsvc.insertBookmark(newFolderId, uri, bmsvc.DEFAULT_INDEX, browser.contentTitle);
+  }
+  if (PlacesUtils.bookmarks.fetch) {
+    PlacesUtils.bookmarks.fetch({url: uri}).then(function (result) {
+      if (!result) {
+        insertBookmark();
+      }
+    });
+  } else {
+    var ar = bmsvc.getBookmarkIdsForURI(uri, {});
+    if(ar.length==0) {
+      insertBookmark();
+    }
+  }
 }
 com.tobwithu.xnotifier.getBMfolder=function(title){
   var historyService = Components.classes["@mozilla.org/browser/nav-history-service;1"]
