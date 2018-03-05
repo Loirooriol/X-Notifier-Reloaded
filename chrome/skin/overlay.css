@@ -98,6 +98,15 @@ toolbar[iconsize="large"] #xnotifier-toolbar-button .xnotifier-toolbar-value{
   margin:0px 0px;
   font-size:12px;
 }
+#PanelUI-mainView #xnotifier-toolbar-button[cui-areatype="menu-panel"][newMsg="true"]{
+  -moz-image-region: rect(40px 32px 72px 0px);
+}
+#PanelUI-mainView #xnotifier-toolbar-button[cui-areatype="menu-panel"][newMsg="false"]{
+  -moz-image-region: rect(40px 64px 72px 32px);
+}
+#PanelUI-mainView #xnotifier-toolbar-button[cui-areatype="menu-panel"][enabled="false"] .toolbarbutton-icon2{
+  -moz-image-region: rect(40px 96px 72px 64px);
+}
 #xnotifier-toolbar-button[cui-areatype="menu-panel"] .toolbarbutton-text{
   line-height: 1.1;
   max-height: 2.2em;
