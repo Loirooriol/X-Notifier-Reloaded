@@ -115,10 +115,17 @@ com.tobwithu.xnotifier.initTabMenu=function(){
       }
     }
   }
-  if(!document.getElementById("xnotifier-tabMenu"))return;//ff2
-  var menu=gBrowser.tabContextMenu;
-  if(!menu)menu=document.getAnonymousElementByAttribute(gBrowser, "anonid", "tabContextMenu");//ff 2.0
-  if(!menu)return;
+  if (!document.getElementById("xnotifier-tabMenu")) {
+    return; // ff 2
+  }
+  var menu = gBrowser.tabContainer.contextMenu;
+  if (!menu && gBrowser.nodeType === 1) {
+    // Check nodeType because gBrowser stops being an Element in Firefox 60.
+    menu = document.getAnonymousElementByAttribute(gBrowser, "anonid", "tabContextMenu"); // ff 2.0
+  }
+  if (!menu) {
+    return;
+  }
   var mi = menu.childNodes;
   var n=0;
   var sep=null;
