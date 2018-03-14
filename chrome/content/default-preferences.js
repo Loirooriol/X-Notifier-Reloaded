@@ -22,7 +22,7 @@ pref("maxConnections", 15);
 pref("connections", 4);
 pref("connectionDelay", 2000);
 pref("openInTab",true);
-pref("reuseTab",true);
+pref("reuseTab",false);
 pref("reloadTab",true);
 pref("loadInBackground",false);
 pref("resetCounter",false);
