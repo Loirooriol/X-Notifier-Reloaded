@@ -4,18 +4,18 @@ Z-notifier is a Firefox add-on that checks your webmail accounts and notifies th
 It's a fork of [X-notifier](https://addons.mozilla.org/firefox/addon/xnotifier/) [3.5.23](https://addons.mozilla.org/firefox/addon/xnotifier/versions/3.5.23), fixed to make it work on latest Firefox versions.
 
 ## Requirements
-Z-Notifier should work on Firefox 25 - 59, and possibly Firefox 60.
+Z-Notifier should work on Firefox 25 - 60, and possibly later versions.
 
 But since Firefox 57, you may need to change some Firefox preferences in `about:config`:
  - `extensions.legacy.enabled = true` allows legacy extensions.
  - `extensions.allow-non-mpc-extensions = true` allows extensions not compatible with multi-process.
  - `xpinstall.signatures.required = false` allows unsigned add-ons (Mozilla no longer signs legacy extensions).
  - `browser.tabs.remote.autostart = false` disables multi-process.
- 
+
 See https://wiki.mozilla.org/Add-ons/Firefox57 for more information.
 
 Note these preferences will have no effect for Firefox Beta and Release. Consider using [Developer Edition](https://www.mozilla.org/firefox/channel/desktop/#developer) or [Nightly](https://www.mozilla.org/firefox/channel/desktop/#nightly).
-  
+
 ## Download and Install
 Available at release page: https://github.com/Loirooriol/Z-Notifier/releases
 
@@ -23,6 +23,8 @@ See [Installation guide](https://github.com/Loirooriol/Z-Notifier/wiki/Installat
 
 ## License
 Z-notifier is based on X-notifier, so it's also licensed under [GNU General Public License, version 2.0](http://www.gnu.org/licenses/gpl-2.0.html).
+
+The software is provided "as is", without warranty of any kind. Legacy extensions are no longer supported by Firefox, and your Firefox profile could be damaged. Use at own risk.
 
 ## Credit
 Thanks a lot [tobwithu](http://xnotifier.tobwithu.com), the creator of the original [X-notifier](https://addons.mozilla.org/firefox/addon/xnotifier/) extension.
