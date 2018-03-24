@@ -3,7 +3,7 @@
   <Description about="urn:mozilla:install-manifest">
     <em:id>{2660c70a-e370-4e3b-b531-52031f92f281}</em:id>
     <em:type>2</em:type>
-    <em:version>3.0</em:version>
+    <em:version>3.1</em:version>
     <em:name>Z-notifier</em:name>
     <em:description>Notifies your webmails</em:description>
     <em:creator>Oriol Brufau</em:creator>
