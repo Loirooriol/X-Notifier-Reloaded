@@ -1,5 +1,5 @@
 /***********************************************************
-Live(Hotmail)
+Live(Hotmail) 4.2.2 to vs 3 (re-implement cookieManager) - 2018-06-14
 ***********************************************************/
 var hostString="hotmail.com";
 var supportInboxOnly=true;
@@ -49,7 +49,7 @@ function checkLogin(aData){
           return true;
         }else{
           if(fnd3)this.viewURL="https://outlook.live.com/mail/";
-          else this.viewURL="https://outlook.live.com/owa/#path=/mail";
+          else this.viewURL="https://outlook.live.com/owa/";
           this.dataURL=["https://outlook.live.com/owa/sessiondata.ashx?appcacheclient=0","appcacheclient=0"];
           this.getHtml(this.dataURL);
           return false;
@@ -183,7 +183,7 @@ if(this.debug)dlog(this.id+"\t"+this.user+"\t"+this.stage,aData);
     }
     ++this.stage;
   case ST_LOGIN_RES+3:
-    var fnd=aData.match(/clientId:\s*?'(\S+?)'/);//new beta
+    var fnd=aData.match(/cId: bootInfo.clientId,/);//new beta
     if(fnd){
       this.isNew=2;
       this.dataURL=["https://outlook.live.com/owa/sessiondata.ashx?appcacheclient=0","appcacheclient=0"];
@@ -196,7 +196,7 @@ if(this.debug)dlog(this.id+"\t"+this.user+"\t"+this.stage,aData);
     if(fnd){
       this.isNew=2;
       this.dataURL=["https://outlook.live.com/owa/sessiondata.ashx?appcacheclient=0","appcacheclient=0"];
-      this.viewURL="https://outlook.live.com/owa/#path=/mail";
+      this.viewURL="https://outlook.live.com/owa/";
       this.mailHost=this.viewURL;
       this.stage=ST_DATA;
       break;
