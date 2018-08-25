@@ -48,7 +48,6 @@ function checkLogin(aData){
         return this.process(aData);
       }
     }
-    this.cookieManager.clear();//clear cookies because 'F' is saved
     this.stage=this.initStage;
     this.getHtml(this.logoutURL);
     return true;
@@ -76,35 +75,6 @@ if(this.debug)dlog(this.id+"\t"+this.user+"\t"+this.stage,aData);
       this.getHtml(this.viewURL);//set cookie for login
       return true;
     }else{
-// vs 3 cookieManager code
-      var done=false;
-      try{
-        var s=this.main.prefBranch.getCharPref("accounts.["+this.id+"#"+this.user+"].cookie");
-        s=s.split("\t");
-        this.cookieManager.addCookies(s[0],s[1]);
-        done=true;
-      }catch(e){}
-      if(!done){
-        var ck=this.getCookieString(this.domain,"F");
-        if(ck){
-          this.cookieManager.addCookies("http://login."+this.domain,ck);
-        }
-      }
-
-      done=false;
-      try{
-        var s=this.main.prefBranch.getCharPref("accounts.["+this.id+"#"+this.user+"].cookie2");
-        s=s.split("\t");
-        this.cookieManager.addCookies(s[0],s[1]);
-        done=true;
-      }catch(e){}
-      if(!done){
-        var ck=this.getCookieString(this.domain,"FS");
-        if(ck){
-          this.cookieManager.addCookies("http://login."+this.domain,ck);
-        }
-      }
-// END vs 3 cookieManager code
       this.getHtml("https://login.yahoo.com/?display=login&done=https%3A%2F%2Fmail.yahoo.com%2F&prefill=0&add=1");
       return false;
     }
@@ -155,7 +125,7 @@ function getData(aData){
   if(!this.isLoggedIn(aData))return obj;
 
   if(this.mode==-1||this.mode==3){
-    fnd=aData.match(/,"folders":{[\s\S]+?},"savedSearches"/);
+    fnd=aData.match(/,"folders":{[\s\S]+?},"mailboxes"/);
     if(fnd)this.mode=3;
     else this.mode=-1;
   }
@@ -175,7 +145,7 @@ function getData(aData){
     else this.mode=-1;
   }
   if(this.mode==3){
-    fnd=aData.match(/,"folders":({[\s\S]+?}),"mailboxes"/);
+    fnd=aData.match(/,"folders":({[\s\S]+?}),"savedSearches"/);
     var num=0;
     try{
       var l=JSON.parse(fnd[1]);
@@ -281,10 +251,6 @@ function getData(aData){
   return obj;
 }
 function getViewURL(aFolder){
-  if((this.mode==3)&&aFolder&&this.dataURLCopy){
-    var url=this.dataURLCopy+"/folders/"+encodeURIComponent(aFolder);
-    return url;
-  }
   if((this.mode==2||this.mode==0)&&aFolder&&this.dataURLCopy){
     var url=this.dataURLCopy+"&fid="+encodeURIComponent(aFolder);
     return url;
